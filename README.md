@@ -1,117 +1,164 @@
-Health Record Portal
+# Health Record Portal
 
 A fullstack Next.js 14 application for centralized healthcare management with patient and doctor dashboards.
 
-Features
-🏥 Two Role-Based Dashboards
+## Features
 
-Patient Dashboard: Manage health records, generate QR codes, control data access
+### 🏥 Two Role-Based Dashboards
+- **Patient Dashboard**: Manage health records, generate QR codes, control data access
+- **Doctor Dashboard**: Access patient records, write prescriptions, scan QR codes
 
-Doctor Dashboard: Access patient records, write prescriptions, scan QR codes
+### 🔐 Authentication & Security
+- Separate registration/login for patients and doctors
+- Session management with localStorage
+- Consent-based access control
+- Comprehensive audit logging
 
-🔐 Authentication & Security
+### 📱 QR Code Integration
+- Patients can generate time-limited QR codes for secure data sharing
+- Doctors can scan QR codes or enter HCID manually
+- Automatic token verification and expiration
 
-Separate registration/login for patients and doctors
+### 📊 Data Management
+- Health records management for patients
+- Prescription writing for doctors
+- Consent management and approval flow
+- Activity audit trails
 
-Session management with localStorage
+## Tech Stack
 
-Consent-based access control
+- **Framework**: Next.js 14 with App Router
+- **Styling**: Tailwind CSS with custom light yellow theme
+- **Icons**: Lucide React
+- **Data Storage**: localStorage (mock database), Pinata (IPFS) + Polygon Blo
+- **QR Codes**: Custom SVG generation
+- **Authentication**: Custom JWT-like sessions
 
-Comprehensive audit logging
+## Getting Started
 
-📱 QR Code Integration
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-Patients can generate time-limited QR codes for secure data sharing
+### Installation
 
-Doctors can scan QR codes or enter HCID manually
+1. Clone or create the project:
+```bash
+npm create next-app@latest health-record-portal
+cd health-record-portal
+```
 
-Automatic token verification and expiration
+2. Install dependencies:
+```bash
+npm install next@14.0.4 react react-dom lucide-react @zxing/browser @zxing/library
+npm install -D typescript @types/node @types/react @types/react-dom tailwindcss postcss autoprefixer eslint eslint-config-next
+```
 
-📊 Data Management
+3. Initialize Tailwind CSS:
+```bash
+npx tailwindcss init -p
+```
 
-Health records management for patients
+4. Copy all the provided files into your project directory
 
-Prescription writing for doctors
+5. Start the development server:
+```bash
+npm run dev
+```
 
-Consent management and approval flow
+6. Open [http://localhost:3000](http://localhost:3000)
 
-Activity audit trails
+## Project Structure
 
-Tech Stack
+```
+health-record-portal/
+├── app/                    # Next.js App Router pages
+│   ├── patient/           # Patient authentication & dashboard
+│   ├── doctor/            # Doctor authentication & dashboard
+│   ├── layout.tsx         # Root layout with providers
+│   └── page.tsx           # Landing page
+├── components/            # Reusable UI components
+│   ├── ui/               # Base UI components (Button, Input, etc.)
+│   ├── Navbar.tsx        # Navigation component
+│   ├── QRCodeDisplay.tsx # QR code generation
+│   └── QRScanner.tsx     # QR code scanning
+├── contexts/             # React contexts
+│   └── AuthContext.tsx   # Authentication state management
+├── types/                # TypeScript type definitions
+│   └── index.ts          # All interface definitions
+├── utils/                # Utility functions
+│   ├── storage.ts        # localStorage helpers
+│   ├── auth.ts           # Authentication utilities
+│   ├── audit.ts          # Audit logging
+│   └── qr.ts             # QR code utilities
+└── styles/               # Global styles
+    └── globals.css       # Tailwind CSS imports
+```
 
-Framework: Next.js 14 with App Router
+## Data Models
 
-Styling: Tailwind CSS with custom light yellow theme
+### Collections (localStorage keys):
+- `users` - User accounts (patients & doctors)
+- `patients` - Patient profiles and health records
+- `doctors` - Doctor profiles
+- `consents` - Access permissions between patients and doctors
+- `prescriptions` - Medical prescriptions
+- `audits` - Activity logs
+- `qrTokens` - QR code tokens with expiration
 
-Icons: Lucide React
+## Key Features Demo
 
-Blockchain Storage:
+### Patient Workflow:
+1. Register/Login as patient
+2. View profile with generated HCID
+3. Add health records
+4. Generate QR code for doctor access
+5. Manage doctor consents
+6. View activity audit log
 
-Polygon (for storing metadata + transaction proofs)
+### Doctor Workflow:
+1. Register/Login as doctor
+2. Enter patient HCID or scan QR code
+3. Request/verify patient consent
+4. View patient health records
+5. Write and save prescriptions
+6. View prescription history
 
-Pinata (IPFS) (for decentralized storage of encrypted health records)
+## Theme & Design
 
-Local Mock Storage: localStorage (for demo & session handling)
+- **Light mode only** with white background
+- **Soft yellow accents** (#FFFBEA) for highlights
+- **Clean card-based layout** with subtle shadows
+- **Responsive design** for mobile and desktop
+- **Consistent typography** and spacing
 
-QR Codes: Custom SVG generation
+## Security Features
 
-Authentication: Custom JWT-like sessions
+- Password hashing (demo implementation)
+- Session expiration management
+- Consent-based access control
+- QR token expiration (15 minutes)
+- Comprehensive audit logging
+- Role-based route protection
 
-Database & Blockchain Layer
-Hybrid Data Model:
+## Development Notes
 
-Pinata (IPFS) → Stores encrypted health records & prescriptions off-chain (immutable storage).
+This is a **demo application** with the following limitations:
+- Uses localStorage instead of a real database
+- Simplified password hashing
+- Basic QR code generation (no real QR scanning library)
+- No real-time updates between users
+- No email verification or password reset
 
-Polygon Blockchain → Stores metadata, HCIDs, access tokens, consent hashes, and transaction logs for integrity and transparency.
+For production use, implement:
+- Real database (PostgreSQL, MongoDB, etc.)
+- Proper authentication (NextAuth.js, Auth0)
+- Real QR code libraries
+- Email services
+- Real-time updates (WebSocket)
+- Enhanced security measures
 
-localStorage (Demo Mode) → Used only for quick testing without blockchain.
+## License
 
-Collections:
+MIT License - feel free to use this project as a starting point for your own healthcare applications.
 
-users - User accounts (patients & doctors)
-
-patients - Patient profiles & records (encrypted → stored in Pinata, reference hash in Polygon)
-
-doctors - Doctor profiles
-
-consents - Blockchain-verified permissions between patients & doctors
-
-prescriptions - Prescriptions stored via IPFS (hash on Polygon)
-
-audits - Audit logs anchored on-chain
-
-qrTokens - QR tokens with expiration, verified via smart contract
-
-Security Features
-
-Encrypted storage of sensitive data before uploading to Pinata
-
-Polygon smart contracts ensure:
-
-Role-based access control
-
-Consent validation before record retrieval
-
-Immutable audit trails of data access and prescriptions
-
-QR tokens verified on-chain with expiration logic
-
-Development Notes
-
-This is a demo application with the following notes:
-
-Default demo uses localStorage only
-
-Blockchain + Pinata requires:
-
-A Polygon Mumbai/Testnet account & smart contract deployment
-
-Pinata API key for IPFS storage
-
-Future expansion:
-
-Move full authentication & data to blockchain + IPFS
-
-Add wallet-based login (MetaMask)
-
-Enable multi-sig access for sensitive data
