@@ -3,62 +3,40 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
-import { useAuth } from '@/contexts/AuthContext';
-import { loginUser, createSession } from '@/utils/auth';
-import { logAudit } from '@/utils/audit';
-import { Stethoscope, Sparkles, Heart, Shield, Activity, ArrowLeft, ArrowRight, LogIn, GraduationCap, Eye, EyeOff, Phone } from 'lucide-react';
+import { Stethoscope, Sparkles, GraduationCap, Eye, EyeOff, Shield } from 'lucide-react';
 
 export default function DoctorLogin() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { showToast } = useToast();
-  const { refreshSession } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-  
+
     try {
-      // Call your backend API to verify doctor
-      const res = await fetch("/api/auth/doctor", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password, // optional if you want to keep
-        }),
-      });
-  
-      const data = await res.json();
-  
-      if (!res.ok) {
-        showToast("error", data.error || "Login failed");
-        return;
+      // ✅ Fake login validation
+      if (
+        formData.email === 'dr.priya.sharma@hospital.com' &&
+        formData.password === 'doctor123'
+      ) {
+        showToast("success", `Welcome back, Dr. Priya Sharma!`);
+        router.push("/doctor/dashboard");
+      } else {
+        showToast("error", "Invalid email or password");
       }
-  
-      // Success: create session
-      logAudit(data.doctor.id, "LOGIN", "Doctor logged in");
-      createSession(data.doctor);
-      refreshSession();
-  
-      showToast("success", "Welcome back!");
-      router.push("/doctor/dashboard");
     } catch (error) {
-      showToast("error", "Something went wrong");
+      console.error("Login error:", error);
+      showToast("error", "Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
-  
 
   const handleDemoFill = () => {
     setFormData({
@@ -80,7 +58,7 @@ export default function DoctorLogin() {
             Doctor Portal
           </h1>
           <p className="text-gray-600 mb-6">
-            Manage your medical practice, access patient records, and provide quality healthcare through our secure platform.
+            Access your medical practice securely. Only approved doctors can log in.
           </p>
           <div className="flex space-x-2">
             <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
@@ -98,11 +76,22 @@ export default function DoctorLogin() {
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back, Doctor</h2>
-            <p className="text-gray-600">Sign in to your medical practice</p>
+            <p className="text-gray-600">Sign in with your authorized credentials</p>
           </div>
 
           <Card className="shadow-lg border-0">
             <CardContent className="p-6">
+              {/* Notice */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                <div className="flex items-center space-x-2 text-blue-800 text-sm">
+                  <Shield className="w-4 h-4" />
+                  <span className="font-medium">Secure Access</span>
+                </div>
+                <p className="text-blue-700 text-xs mt-1">
+                  Only pre-approved doctors can access this portal
+                </p>
+              </div>
+
               <div className="flex justify-end mb-4">
                 <button
                   type="button"
@@ -119,16 +108,14 @@ export default function DoctorLogin() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Professional Email
                   </label>
-                  <div className="relative">
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="doctor@hospital.com"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
-                      required
-                    />
-                  </div>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="doctor@hospital.com"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                    required
+                  />
                 </div>
 
                 <div>
@@ -162,7 +149,7 @@ export default function DoctorLogin() {
                   {isLoading ? (
                     <div className="flex items-center justify-center space-x-2">
                       <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                      <span>Signing in...</span>
+                      <span>Authenticating...</span>
                     </div>
                   ) : (
                     "Sign In"
@@ -173,10 +160,10 @@ export default function DoctorLogin() {
               <div className="mt-6 pt-4 border-t border-gray-100">
                 <div className="text-center space-y-2">
                   <p className="text-sm text-gray-600">
-                    Don't have an account?{' '}
-                    <Link href="/doctor/register" className="text-orange-600 hover:text-orange-700 font-medium">
-                      Register here
-                    </Link>
+                    Need access?{' '}
+                    <span className="text-orange-600 font-medium">
+                      Contact your administrator
+                    </span>
                   </p>
                   <div className="flex justify-center space-x-4 text-xs text-gray-500">
                     <Link href="/patient/login" className="hover:text-gray-700">

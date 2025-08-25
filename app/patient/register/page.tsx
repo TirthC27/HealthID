@@ -30,12 +30,20 @@ export default function PatientRegister() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    // ✅ Email validation
+    if (!formData.email.includes('@')) {
+      showToast('error', 'Please enter a valid email address');
+      return;
+    }
+
+    // ✅ Password match check
     if (formData.password !== formData.confirmPassword) {
       showToast('error', 'Passwords do not match');
       return;
     }
 
+    // ✅ Password length check
     if (formData.password.length < 6) {
       showToast('error', 'Password must be at least 6 characters');
       return;

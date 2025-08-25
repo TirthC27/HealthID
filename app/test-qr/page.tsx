@@ -43,9 +43,9 @@ export default function TestQRPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-medium text-blue-900 mb-2">Step 1: Generate QR Code</h4>
-                  <p className="text-blue-800 text-sm">
+                <div className="p-4 bg-orange-50 rounded-lg">
+                  <h4 className="font-medium text-orange-900 mb-2">Step 1: Generate QR Code</h4>
+                  <p className="text-orange-800 text-sm">
                     Click "Generate QR Code" to create a real, scannable QR code using the qrcode library.
                   </p>
                 </div>
@@ -58,9 +58,9 @@ export default function TestQRPage() {
                   </p>
                 </div>
                 
-                <div className="p-4 bg-purple-50 rounded-lg">
-                  <h4 className="font-medium text-purple-900 mb-2">Step 3: Verify Data</h4>
-                  <p className="text-purple-800 text-sm">
+                <div className="p-4 bg-orange-50 rounded-lg">
+                  <h4 className="font-medium text-orange-900 mb-2">Step 3: Verify Data</h4>
+                  <p className="text-orange-800 text-sm">
                     The QR code contains JSON data with a secure token that can be used for patient access.
                     The token data is also displayed below the QR code for testing purposes.
                   </p>

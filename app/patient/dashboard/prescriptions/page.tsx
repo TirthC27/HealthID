@@ -143,7 +143,7 @@ export default function PrescriptionsPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-2xl font-bold text-blue-600 mb-1">
+                    <div className="text-2xl font-bold text-orange-600 mb-1">
                       {prescriptions.reduce((total, p) => total + p.meds.length, 0)}
                     </div>
                     <p className="text-gray-600 text-sm">Total Medications</p>
@@ -233,10 +233,7 @@ export default function PrescriptionsPage() {
                             Recent
                           </span>
                         )}
-                        <Button variant="secondary" size="sm">
-                          <Download className="w-4 h-4 mr-1" />
-                          Download
-                        </Button>
+                        
                       </div>
                     </div>
                   </CardHeader>

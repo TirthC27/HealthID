@@ -37,7 +37,7 @@ export default function HomePage() {
               <div className="w-10 h-10 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg flex items-center justify-center">
                 <Stethoscope className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-800">MediCare</span>
+              <span className="text-xl font-bold text-gray-800">HealthID</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a href="#" className="text-gray-600 hover:text-orange-500 transition-colors">Home</a>
@@ -156,7 +156,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Book an Appointment</h3>
               <p className="text-gray-600 text-sm mb-2">Get expert care today</p>
-              <p className="text-orange-500 font-medium">medicareexpert.com</p>
+              <p className="text-orange-500 font-medium">HealthIDexpert.com</p>
             </div>
 
             {/* Visit Us */}
@@ -352,7 +352,7 @@ export default function HomePage() {
                 <div className="w-8 h-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg flex items-center justify-center">
                   <Stethoscope className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold">MediCare</span>
+                <span className="text-xl font-bold">HealthID</span>
               </div>
               <p className="text-gray-400 mb-4">
                 Advanced healthcare management for the modern world.
@@ -397,7 +397,7 @@ export default function HomePage() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 MediCare. All rights reserved. Built with ❤️ for better healthcare.</p>
+            <p>&copy; 2024 HealthID. All rights reserved. Built with ❤️ for better healthcare.</p>
           </div>
         </div>
       </footer>

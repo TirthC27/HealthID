@@ -233,10 +233,7 @@ export default function PatientDashboard() {
                       <h3 className="text-xl font-semibold text-gray-800">Patient Body Analysis</h3>
                       <span className="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full">Real Time</span>
                     </div>
-                    <Button variant="secondary" size="sm">
-                      <Target className="w-4 h-4 mr-2" />
-                      View Details
-                    </Button>
+                    
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -345,48 +342,7 @@ export default function PatientDashboard() {
               </Card>
 
               {/* Recent Prescriptions Notification */}
-              {recentPrescriptions.length > 0 && (
-                <Card className="bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg border-0">
-                  <CardHeader className="pb-3">
-                    <h3 className="font-semibold text-gray-800 flex items-center">
-                      <Pill className="w-5 h-5 text-blue-500 mr-2" />
-                      New Prescriptions
-                    </h3>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      {recentPrescriptions.slice(0, 2).map((prescription) => {
-                        const doctor = doctors.find(d => d.id === prescription.doctorId);
-                        return (
-                          <div key={prescription.id} className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
-                            <div className="flex items-center space-x-2">
-                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                              <div>
-                                <span className="text-sm font-medium text-gray-700">
-                                  {prescription.meds.length} medication{prescription.meds.length > 1 ? 's' : ''}
-                                </span>
-                                <div className="text-xs text-gray-500">
-                                  From Dr. {doctor?.name || 'Unknown'}
-                                </div>
-                              </div>
-                            </div>
-                            <span className="text-xs text-gray-500">
-                              {new Date(prescription.createdAt).toLocaleDateString()}
-                            </span>
-                          </div>
-                        );
-                      })}
-                      <Button 
-                        onClick={() => router.push('/patient/dashboard/prescriptions')}
-                        className="w-full mt-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
-                        size="sm"
-                      >
-                        View All Prescriptions
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+              
             </div>
           </div>
         </div>
